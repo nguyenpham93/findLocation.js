@@ -25,21 +25,24 @@ let loc8 = new Location(1008, 'Anh Hòa Bakery & Coffee', '48 Trần Đại Ngh�
 let loc9 = new Location(1009, 'Fika Café', '50 Lò Đúc', '07:00 AM - 11:00 PM', 7.5, 21.01608, 105.8563678,'coffee','hai ba trung');
 let loc10 = new Location(1010, 'Sky1991 - Coffee & Hot Dog', '111K2 Ngõ 48 Tạ Quang Bửu', "08:00 AM - 11:00 PM", 7.0, 21.00098366, 105.8490054,'coffee','hoan kiem');
 
-let locations = [loc, loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10];
+const locations = [loc, loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10];
 
-function findLoc(long,lat,type,r){
-    let tempLoc = locations.slice(0)
+function findLoc(lat,long,type,r){
+    let tmp = [];
     let results = [];
-    tempLoc.forEach((loc)=>{
+    locations.forEach((loc)=>{
         if ( loc['type'] === type ){
             let distance = haversine(lat,long,loc['lat'],loc['long']);
-            loc['distance'] = distance;
             if(distance <= r){
-                results.push(loc);
+                tmp.push({
+                    'id' : loc['id'],
+                    'distance' : distance
+                });
             }
         }        
     });
-    sorting(results);
+    sorting(tmp);
+    results = merge(tmp,locations);
     return results;
 }
 
@@ -62,6 +65,15 @@ function sorting(list){
         }
         list[j + 1] = tmp;
     }
+}
+
+function merge(list,dataRoot){
+    let result = [];
+    list.forEach((loc) => {
+        let tmp = dataRoot.find(obj => obj.id === loc.id);
+        result.push(tmp);
+    });
+    return result;
 }
 
 function haversine() {

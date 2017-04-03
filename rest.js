@@ -17,7 +17,7 @@ app.post('/find/near',(req,res)=>{
         uLat = req.body['lat'],
         uType = req.body['type'],
         uR = req.body['r'];
-    let results = search.findLoc(uLong,uLat,uType,uR);
+    let results = search.findLoc(uLat,uLong,uType,uR);
     console.log(results);
 });
 
