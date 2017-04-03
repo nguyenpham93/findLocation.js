@@ -28,11 +28,11 @@ let loc10 = new Location(1010, 'Sky1991 - Coffee & Hot Dog', '111K2 Ngõ 48 Tạ
 let locations = [loc, loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10];
 
 function findLoc(long,lat,type,r){
-    let tempLoc = locations.splice(0)
+    let tempLoc = locations.slice(0)
     let results = [];
     tempLoc.forEach((loc)=>{
         if ( loc['type'] === type ){
-            let distance = haversine(long,lat,loc['long'],loc['lat']);
+            let distance = haversine(lat,long,loc['lat'],loc['long']);
             loc['distance'] = distance;
             if(distance <= r){
                 results.push(loc);
